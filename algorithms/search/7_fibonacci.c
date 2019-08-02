@@ -1,37 +1,30 @@
 #include <stdio.h>
 
 int search(int arr[], int n, int ele) {
-    //Fibonacci of m-1
-    int fibM1 = 0;
-    //Fibonacci of m-2
-    int fibM2 = 1;
-    //Fibonacci of m
-    int fibM = fibM1+fibM2;
+    int fibM2=0,fibM1=1,fibM=1;
     while(fibM<n) {
         fibM2 = fibM1;
         fibM1 = fibM;
-        fibM = fibM1+fibM2;
+        fibM = fibM1 + fibM2;
     }
-    int offset = -1;
+    int low = -1;
     while(fibM>1) {
-        int i = (offset+fibM2)>n?n:(offset+fibM2);
-        if(arr[i]==ele) {
-            return i;
-        }
-        else if(arr[i]>ele) {
-            fibM = fibM2;
-            fibM1 = fibM1-fibM2;
-            fibM2 = fibM-fibM1;
-        }
-        else {
+        int i = low+fibM2>n-1?n-1:low+fibM2;
+        if(arr[i]==ele) return i;
+        else if(arr[i]<ele) {
             fibM = fibM1;
             fibM1 = fibM2;
-            fibM2 = fibM-fibM1;
-            offset = i;
+            fibM2 = fibM - fibM1;
+            low = i;
+        }
+        else {
+            fibM = fibM2;
+            fibM1 = fibM1-fibM;
+            fibM2 = fibM - fibM1;
         }
     }
-    if(fibMMm1 && arr[offset+1]==ele)return offset+1;
-    return -1;
+    if(fibM1 && arr[low+1]==ele) return low+1;
+    else return -1;
 }
 
 int main() {
